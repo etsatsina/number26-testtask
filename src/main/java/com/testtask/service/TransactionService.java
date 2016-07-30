@@ -12,9 +12,9 @@ public interface TransactionService {
 
     void save(Long id, TransactionDto transactionDto);
 
-    TransactionDto getById(Long id);
+    TransactionDto get(Long id);
 
-    List<Long> getByType(String type);
+    List<Long> findAllByType(String type);
 
     TotalTransactionAmountDto getTotalTransactionAmount(Long id);
 }
