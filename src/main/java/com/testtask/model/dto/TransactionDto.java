@@ -1,5 +1,6 @@
 package com.testtask.model.dto;
 
+import com.testtask.model.domain.Transaction;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,4 +20,10 @@ public class TransactionDto {
     private String type;
 
     private Long parentId;
+
+    public TransactionDto(Transaction transaction) {
+        this.amount = transaction.getAmount();
+        this.type = transaction.getType();
+        this.parentId = transaction.getParentId();
+    }
 }
