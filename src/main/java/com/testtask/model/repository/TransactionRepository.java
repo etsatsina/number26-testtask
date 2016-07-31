@@ -15,4 +15,6 @@ public interface TransactionRepository {
     Transaction get(Long id);
 
     List<Long> findAllByType(String type);
+
+    Boolean contains(Long id);
 }

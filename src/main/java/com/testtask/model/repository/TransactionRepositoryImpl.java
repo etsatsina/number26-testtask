@@ -3,6 +3,7 @@ package com.testtask.model.repository;
 import com.testtask.model.TransactionDatasource;
 import com.testtask.model.domain.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 /**
  * Created by etsatsina on 30-Jul-16.
  */
+@Repository
 public class TransactionRepositoryImpl implements TransactionRepository {
 
     @Autowired
@@ -35,6 +37,10 @@ public class TransactionRepositoryImpl implements TransactionRepository {
                 .filter(t -> t.getType().equals(type))
                 .map(Transaction::getId)
                 .collect(Collectors.toList());
+    }
+
+    public Boolean contains(Long id) {
+        return datasource.getStorage().containsKey(id);
     }
 
 }
