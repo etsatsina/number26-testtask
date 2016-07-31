@@ -10,7 +10,7 @@ import java.util.Set;
 /**
  * Created by etsatsina on 29-Jul-16.
  */
-@EqualsAndHashCode(exclude = "childrenIds")
+@EqualsAndHashCode(of = "id")
 @Setter
 @Getter
 public class Transaction {
