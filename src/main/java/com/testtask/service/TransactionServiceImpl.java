@@ -1,7 +1,8 @@
 package com.testtask.service;
 
+import com.testtask.exception.EntityExistsException;
+import com.testtask.exception.EntityNotFoundException;
 import com.testtask.exception.ParentNotFoundException;
-import com.testtask.exception.TransactionAlreadyExistsException;
 import com.testtask.model.domain.Transaction;
 import com.testtask.model.dto.TotalTransactionAmountDto;
 import com.testtask.model.dto.TransactionDto;
@@ -27,16 +28,18 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public void save(Long id, TransactionDto transactionDto) {
-        if (transactionRepository.get(id) != null) {
-            throw new TransactionAlreadyExistsException(id);
+        if (transactionRepository.contains(id)) {
+            throw new EntityExistsException(id);
         }
 
-        if (transactionDto.getParentId() != null && transactionRepository.get(id) == null) {
-            throw new ParentNotFoundException(transactionDto.getParentId());
-        }
-        else {
-            Long parentId = transactionDto.getParentId();
-            transactionRepository.get(parentId).getChildTransactionsIds().add(id);
+        Long parentId = transactionDto.getParentId();
+
+        if (parentId != null) {
+            if (!transactionRepository.contains(parentId)) {
+                throw new ParentNotFoundException(transactionDto.getParentId());
+            } else {
+                transactionRepository.get(parentId).getChildTransactionsIds().add(id);
+            }
         }
 
         Transaction transaction = new Transaction();
@@ -50,6 +53,10 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public TransactionDto get(Long id) {
+        if (!transactionRepository.contains(id)) {
+            throw new EntityNotFoundException(id);
+        }
+
         return new TransactionDto(transactionRepository.get(id));
     }
 
@@ -60,7 +67,13 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public TotalTransactionAmountDto getTotalTransactionAmount(Long id) {
-        return new TotalTransactionAmountDto(getTotalAmount(transactionRepository.get(id)));
+        if (!transactionRepository.contains(id)) {
+            throw new EntityNotFoundException(id);
+        }
+
+        TotalTransactionAmountDto result =  new TotalTransactionAmountDto();
+        result.setSum(getTotalAmount(transactionRepository.get(id)));
+        return result;
     }
 
     private Double getTotalAmount(Transaction transaction) {
