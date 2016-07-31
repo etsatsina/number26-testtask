@@ -30,8 +30,8 @@ public class ResourceExceptionHandler {
 
     @ExceptionHandler(ParentNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleParentNotFoundException(ParentNotFoundException ex) {
-        ErrorResponse error = new ErrorResponse(HttpStatus.PRECONDITION_FAILED.value(), ex.getMessage());
-        return new ResponseEntity<>(error, HttpStatus.PRECONDITION_FAILED);
+        ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

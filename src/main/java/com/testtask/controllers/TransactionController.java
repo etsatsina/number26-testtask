@@ -29,7 +29,7 @@ public class TransactionController {
     @ResponseStatus(HttpStatus.CREATED)
     public void create(@PathVariable("transactionId") Long id,
                        @Valid @RequestBody TransactionDto transactionDto) {
-        transactionService.save(id, transactionDto);
+        transactionService.create(id, transactionDto);
     }
 
     @RequestMapping(value = "/transaction/{transactionId}", method = RequestMethod.GET)

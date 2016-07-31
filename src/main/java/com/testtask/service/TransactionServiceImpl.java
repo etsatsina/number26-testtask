@@ -27,7 +27,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public void save(Long id, TransactionDto transactionDto) {
+    public Transaction create(Long id, TransactionDto transactionDto) {
         if (transactionRepository.contains(id)) {
             throw new EntityExistsException(id);
         }
@@ -48,7 +48,7 @@ public class TransactionServiceImpl implements TransactionService {
         transaction.setParentId(transactionDto.getParentId());
         transaction.setType(transactionDto.getType());
 
-        transactionRepository.save(transaction);
+        return transactionRepository.save(transaction);
     }
 
     @Override

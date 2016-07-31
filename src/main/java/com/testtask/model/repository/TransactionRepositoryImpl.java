@@ -12,13 +12,19 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
+ * Using a {@link HashMap} representation of datasource.
+ *
  * Created by etsatsina on 30-Jul-16.
  */
 @Repository
 public class TransactionRepositoryImpl implements TransactionRepository {
 
-    @Autowired
     private TransactionDatasource datasource;
+
+    @Autowired
+    public TransactionRepositoryImpl(TransactionDatasource datasource) {
+        this.datasource = datasource;
+    }
 
     @Override
     public Transaction save(Transaction transaction) {
@@ -39,8 +45,13 @@ public class TransactionRepositoryImpl implements TransactionRepository {
                 .collect(Collectors.toList());
     }
 
+    @Override
     public Boolean contains(Long id) {
         return datasource.getStorage().containsKey(id);
     }
 
+    @Override
+    public void clear() {
+        datasource.getStorage().clear();
+    }
 }

@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 
 /**
+ * Datasource for storing {@link Transaction}.
+ *
  * Created by etsatsina on 30-Jul-16.
  */
 @Component
@@ -16,6 +18,4 @@ import java.util.HashMap;
 public class TransactionDatasource {
 
     private final HashMap<Long, Transaction> storage = new HashMap<>();
-
-
 }
