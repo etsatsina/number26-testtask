@@ -5,11 +5,5 @@ package com.testtask.exception;
  */
 public class ApplicationException extends RuntimeException {
 
-    public ApplicationException() {
-        super();
-    }
-
-    public ApplicationException(String msg) {
-        super(msg);
-    }
+    private static final long serialVersionUID = -7845900233452018445L;
 }
